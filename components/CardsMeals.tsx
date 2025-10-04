@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
         fontFamily: 'sans-serif',
         fontWeight: 'semibold',
         padding: 10,
-        fontSize: 18,
         flexDirection: 'row',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
@@ -65,6 +64,7 @@ const styles = StyleSheet.create({
     },
     whiteText: {
       color: "white",
+      fontSize: 16,
     },
     smaller: {
       marginTop: 20,
@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
     // border: "1px solid rgba(255, 255, 255, 0.125)",
     },
     large: {
-      width: "65%",
+      width: "70%",
     },
     small: {
-      width: "35%",
+      width: "40%",
     },
 })

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         fontSize: 16,
         flexDirection: 'row',
-        width: '65%',
+        width: '70%',
     },
     textMaroon: {
       color: 'white',

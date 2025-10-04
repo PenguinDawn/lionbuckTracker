@@ -7,12 +7,16 @@ import ThemedSchedule from '@/components/ThemedSchedule';
 import Seperator from '../../components/Seperator';
  
 import { Colors } from '@/constants/Colors';
+import { useFonts } from "expo-font";
 import { useState } from 'react';
 import { ScrollView, useColorScheme } from 'react-native';
 import { CircularProgressBase } from 'react-native-circular-progress-indicator';
 export default function TabOneScreen() {
 
   // if statements to change the mealplan numbers
+  const [fontsLoaded] = useFonts({
+    "Tangerine-Reg": require("../../assets/fonts/Tangerine-Regular.ttf"),
+  });
 
   const mealplan = "A";
   let totalMeals;
@@ -122,8 +126,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   lionTitle: {
-    fontFamily: "script",
-    fontSize: 24,
+    fontFamily: "Tangerine-Reg",
+    fontSize: 36,
   },
   progressHolder: {
     flexDirection: "column",
