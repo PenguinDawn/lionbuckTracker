@@ -4,18 +4,22 @@ import BigNumber from '@/components/BigNum';
 import CardMeal from '@/components/CardsMeals';
 import SmallNumber from '@/components/SmallNum';
 import ThemedSchedule from '@/components/ThemedSchedule';
+import Header from '../../components/Header';
 import Seperator from '../../components/Seperator';
- 
+
 import { Colors } from '@/constants/Colors';
-import { useFonts } from "expo-font";
+
 import { useState } from 'react';
 import { ScrollView, useColorScheme } from 'react-native';
 import { CircularProgressBase } from 'react-native-circular-progress-indicator';
+
+import { useFonts } from "expo-font";
 export default function TabOneScreen() {
 
   // if statements to change the mealplan numbers
   const [fontsLoaded] = useFonts({
     "Tangerine-Reg": require("../../assets/fonts/Tangerine-Regular.ttf"),
+    "Archivo-Reg": require("../../assets/fonts/Archivo-Regular.ttf"),
   });
 
   const mealplan = "A";
@@ -65,6 +69,7 @@ export default function TabOneScreen() {
   return (
     <ScrollView>
       <View style={styles.container}>
+        <Header />
       
 
       {/* Progress circle bar */}
@@ -106,7 +111,7 @@ export default function TabOneScreen() {
       {/* create a "database" for mealplan names and totals*/}
       <ThemedSchedule>Meal Plan {mealplan} (<Text style={styles.textUnderline}>{totalMeals} meals</Text>)</ThemedSchedule>
 
-      <Text style={{color: "#e3d073ff"}}>*resets every semester</Text>
+      <Text style={{color: "#e3d073ff", fontFamily: "Archivo-Reg, sans-serif"}}>*resets every semester</Text>
       <Seperator />
 
       </View>
@@ -117,7 +122,6 @@ export default function TabOneScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30,
     alignItems: 'center',
     gap: 10,
   },

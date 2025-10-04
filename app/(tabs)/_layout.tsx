@@ -2,7 +2,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useColorScheme } from 'react-native';
 import { Colors } from '../../constants/Colors';
 
@@ -27,7 +26,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: theme.tint,  
-        headerShown: useClientOnlyValue(false, true),
+        headerShown: false,
       }}>
       <Tabs.Screen
         name="index"

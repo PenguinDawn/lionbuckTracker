@@ -28,11 +28,14 @@ const styles = StyleSheet.create({
     textSlash: {
       fontSize: 20,
       marginTop: 7,
+      fontFamily: "sans-serif",
+      paddingLeft: 2,
     },
     textBaby: {
       paddingTop: 2,
       fontSize: 16,
       marginTop: 14,
+      fontFamily: "sans-serif",
     }
 
 })

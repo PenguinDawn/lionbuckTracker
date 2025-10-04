@@ -25,13 +25,16 @@ export default BigNumber
 const styles = StyleSheet.create({
     textNums: {
       fontSize: 24,
+      fontFamily: "sans-serif",
     },
     textSlash: {
       marginTop: 5,
       fontSize: 20,
+      fontFamily: "sans-serif",
     },
     textBaby: {
       fontSize: 16,
+      fontFamily: "sans-serif",
     }
 
 })

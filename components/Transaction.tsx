@@ -3,16 +3,13 @@ import { Colors } from '../constants/Colors';
 
 type CardMealProps = {
   headingTitle: string,
-  num1: any,
-  num2: any,
-  size: string,
+  purchase: string,
+  price: any,
+  newBalance: any,
 }
 
 import { useFonts } from 'expo-font';
-
-
-
-const CardMeal = ({headingTitle, num1, num2, size}: CardMealProps) => {
+const Transaction = ({headingTitle, purchase, price, newBalance}: CardMealProps) => {
     const [fontsLoaded] = useFonts({
     "Archivo-Reg": require("../assets/fonts/Archivo-Regular.ttf"),
   });
@@ -24,26 +21,17 @@ const CardMeal = ({headingTitle, num1, num2, size}: CardMealProps) => {
       else {
         theme = Colors.light;
       }
-
-    let sizing;
-    
-    if(size === "large") {
-      sizing = styles.large;
-    }
-    else {
-      sizing = styles.small;
-    }
   
 
   return (
-    <View style={[styles.carded, sizing]}>
+    <View style={[styles.carded]}>
       <View style={[styles.maroon]}><Text style={styles.whiteText}>{headingTitle}</Text></View>
-      <View style={[styles.flexer, {backgroundColor: theme.background}]}>{num1}{num2}</View>
+      <View style={[styles.flexer, {backgroundColor: theme.background}]}></View>
     </View>
   )
 };
 
-export default CardMeal
+export default Transaction
 
 const styles = StyleSheet.create({
     maroon: {
@@ -57,6 +45,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
+        width: "65%",
     },
     flexer: {
       flexDirection: "row",
@@ -81,11 +70,5 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderRadius: 12,
     // border: "1px solid rgba(255, 255, 255, 0.125)",
-    },
-    large: {
-      width: "70%",
-    },
-    small: {
-      width: "40%",
     },
 })
