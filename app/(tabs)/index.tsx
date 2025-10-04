@@ -14,14 +14,39 @@ export default function TabOneScreen() {
 
   // if statements to change the mealplan numbers
 
+  const mealplan = "A";
+  let totalMeals;
+  let guestMeals;
+
+  if(mealplan == "A") {
+    totalMeals = 14;
+    guestMeals = 5;
+  }
+  else if (mealplan == "B") {
+    totalMeals = 10;
+    guestMeals = 5;
+  }
+  else if (mealplan == "U") {
+    totalMeals = 19;
+    guestMeals = 15;
+  }
+  else if (mealplan == "C") {
+    totalMeals = 80;
+    guestMeals = 5;
+  }
+  else {
+    totalMeals = NaN;
+    guestMeals = NaN;
+  }
+
   const totalBucks = 150.00;
-  const totalMeals = 14;
   const totalChickfila = 2;
   const totalLP = 5;
   const [lionBucks, decreaseBucks] = useState(100.00);
   const [meals, decreaseMeals] = useState(10);
   const [lpMeals, decreaseLPMeals] = useState(5);
   const [chickMeals, decreaseChickMeals] = useState(2);
+  const [guestMealsLeft, decreaseGuestMeals] = useState(5);
 
       let theme;
         if (useColorScheme() == "dark") {
@@ -68,13 +93,16 @@ export default function TabOneScreen() {
           <CardMeal size="small" headingTitle="Chickfila Swipes" num1={<BigNumber>{chickMeals}</BigNumber>} num2={<SmallNumber>{totalChickfila}</SmallNumber>}></CardMeal>
       </View>
 
+      <CardMeal size="large" headingTitle="Guest Meals*" num1={<BigNumber>{guestMealsLeft}</BigNumber>} num2={<SmallNumber>{guestMeals}</SmallNumber>}></CardMeal>
+
       <Seperator />
 
       {/* create reset function */}
       <ThemedSchedule>Resets on Sunday (<Text style={styles.textUnderline}>2 days</Text>)</ThemedSchedule>
       {/* create a "database" for mealplan names and totals*/}
-      <ThemedSchedule>Meal Plan A (<Text style={styles.textUnderline}>{totalMeals} meals</Text>)</ThemedSchedule>
+      <ThemedSchedule>Meal Plan {mealplan} (<Text style={styles.textUnderline}>{totalMeals} meals</Text>)</ThemedSchedule>
 
+      <Text style={{color: "#e3d073ff"}}>*resets every semester</Text>
       <Seperator />
 
       </View>
