@@ -250,7 +250,7 @@ const SectionHeader = memo(function SectionHeader({ title, total }) {
 
 
 // ---------- Main Component ----------
-export default function TransactionsSectionList() {
+export default function HistoryScreen() {
   const [sections, setSections] = useState(BASE_SECTIONS);
   const [activeTag, setActiveTag] = useState('All');
   const [refreshing, setRefreshing] = useState(false);

@@ -13,9 +13,7 @@ import { ScrollView, useColorScheme } from 'react-native';
 import { CircularProgressBase } from 'react-native-circular-progress-indicator';
 
 import { useFonts } from "expo-font";
-export default function HomeScreen() {
-  // const response = await fetch(hhtps://api.fhumealtracker.fhu.edu/data.json)
-  // const data = await response.json
+export default function ProfileScreen() {
 
   
 
