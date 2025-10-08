@@ -257,89 +257,33 @@ export default function TransactionsSectionList() {
   // Filter sections by tag (and drop empty sections)
   const filtered = useMemo(() => {
     const tag = activeTag === 'All' ? null : activeTag;
-
-
     const mapped = sections.map((s) => {
-
-
       const data = tag ? s.data.filter((t) => t.tag === tag) : s.data;
-
-
       return { ...s, data, title: prettyDate(s.date), _total: data.reduce((sum, t) => sum + t.amount, 0) };
-
-
     });
-
-
     return mapped.filter((s) => s.data.length > 0);
-
-
   }, [sections, activeTag]);
 
-
-
-
-
   const grandTotal = useMemo(
-
-
     () => filtered.reduce((sum, s) => sum + s._total, 0),
-
-
     [filtered]
-
-
   );
 
-
-
-
-
   // Pull-to-refresh: simulate a network update (e.g., add a tiny random cents delta)
-
-
   const onRefresh = useCallback(() => {
-
-
     setRefreshing(true);
-
-
     setTimeout(() => {
-
-
       setSections((prev) =>
-
-
         prev.map((sec) => ({
-
-
           ...sec,
-
-
           data: sec.data.map((t) => ({
-
-
             ...t,
-
-
             // simulate fresh amounts +/- up to 10 cents
-
-
             amount: Math.max(0, +(t.amount + ((Math.random() - 0.5) * 0.2)).toFixed(2)),
-
-
           })),
-
-
         }))
-
-
       );
-
-
       setRefreshing(false);
-
-
     }, 2000);
 
 
