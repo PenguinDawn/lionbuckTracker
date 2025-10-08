@@ -18,53 +18,22 @@ const sectionTotal = (section) => section.data.reduce((sum, t) => sum + (t.amoun
 
 // ---------- Styling ----------
 const TAG_STYLES = {
-
-
   Starbucks: { bg: '#F3E8FF', text: '#6B21A8' },
-
-
   LP:        { bg: '#E0F2FE', text: '#075985' },
-
-
   CFA:       { bg: '#FEF3C7', text: '#92400E' },
-
-
   Jones:     { bg: '#DCFCE7', text: '#166534' },
-
-
 };
-
 
 const ALL_TAGS = ['All', 'Starbucks', 'LP', 'CFA', 'Jones'];
 
-
-
-
-
 // ---------- Sample Data (10 days, 3–6 txns/day) ----------
-
-
 const BASE_SECTIONS = [
-
-
   { date: '2025-09-29', data: [
-
-
     { id: '0929-1', amount: 6.45,  description: 'Iced latte', tag: 'Starbucks' },
-
-
     { id: '0929-2', amount: 42.18, description: 'Groceries (fill-in trip)', tag: 'LP' },
-
-
     { id: '0929-3', amount: 12.00, description: 'Chicken sandwich combo', tag: 'CFA' },
-
-
     { id: '0929-4', amount: 85.00, description: 'Dry cleaning pickup', tag: 'Jones' },
-
-
   ]},
-
-
   { date: '2025-09-28', data: [
 
 
@@ -239,150 +208,54 @@ const BASE_SECTIONS = [
 ];
 
 
-
-
-
 // ---------- UI Bits ----------
-
-
 const TagChip = memo(function TagChip({ label, active, onPress }) {
-
-
   return (
-
-
     <Pressable onPress={onPress} style={[styles.chip, active && styles.chipActive]}>
-
-
       <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
-
-
     </Pressable>
-
-
   );
-
-
 });
-
-
-
-
 
 const Tag = memo(function Tag({ value }) {
-
-
   const style = TAG_STYLES[value] || { bg: '#E5E7EB', text: '#111827' };
-
-
   return (
-
-
     <View style={[styles.tag, { backgroundColor: style.bg }]}>
-
-
       <Text style={[styles.tagText, { color: style.text }]}>{value}</Text>
-
-
     </View>
-
-
   );
-
-
 });
-
-
-
-
 
 const TransactionRow = memo(function TransactionRow({ item }) {
-
-
   return (
-
-
     <View style={styles.row}>
-
-
       <View style={styles.rowText}>
-
-
         <Text style={styles.desc} numberOfLines={1}>{item.description}</Text>
-
-
         <Tag value={item.tag} />
-
-
       </View>
-
-
       <Text style={styles.amount}>{CURRENCY.format(item.amount)}</Text>
-
-
     </View>
-
-
   );
-
-
 });
-
-
-
 
 
 const SectionHeader = memo(function SectionHeader({ title, total }) {
-
-
   return (
-
-
     <View style={styles.sectionHeader}>
-
-
       <Text style={styles.sectionTitle}>{title}</Text>
-
-
       <Text style={styles.sectionTotal}>{CURRENCY.format(total)}</Text>
-
-
     </View>
-
-
   );
-
-
 });
 
 
-
-
-
 // ---------- Main Component ----------
-
-
 export default function TransactionsSectionList() {
-
-
   const [sections, setSections] = useState(BASE_SECTIONS);
-
-
   const [activeTag, setActiveTag] = useState('All');
-
-
   const [refreshing, setRefreshing] = useState(false);
-
-
-
-
-
   // Filter sections by tag (and drop empty sections)
-
-
   const filtered = useMemo(() => {
-
-
     const tag = activeTag === 'All' ? null : activeTag;
 
 
