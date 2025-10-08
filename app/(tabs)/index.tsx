@@ -1,23 +1,42 @@
-import { StyleSheet, Text, View } from 'react-native';
 
+import { useFonts } from "expo-font";
+import { useState } from 'react';
+import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { CircularProgressBase } from 'react-native-circular-progress-indicator';
+// components
 import BigNumber from '@/components/BigNum';
 import CardMeal from '@/components/CardsMeals';
 import SmallNumber from '@/components/SmallNum';
+import { Colors } from '@/constants/Colors';
 import Header from '../../components/Header';
 import Seperator from '../../components/Seperator';
 
-import { Colors } from '@/constants/Colors';
-
-import { useState } from 'react';
-import { ScrollView, useColorScheme } from 'react-native';
-import { CircularProgressBase } from 'react-native-circular-progress-indicator';
-
-import { useFonts } from "expo-font";
 export default function HomeScreen() {
-  // const response = await fetch(hhtps://api.fhumealtracker.fhu.edu/data.json)
-  // const data = await response.json
 
+  // const getData = async () => { 
+    // bring in our data
+    // const response = await fetch(hhtps://api.fhumealtracker.fhu.edu/data.json);
+    // const data = await response.json;
+    // setMeals(data.meals.remaining);
+    // setLPMeals(data.lpmeals.remaining);
+    // setChickMeals(data.chickmeals.remaining);
+    // setGuestMeals(data.guestmeals.remaining);
+    // setBucks(data.lionbucks.remaining);
+  // }
+
+  // use Effect(() => { getData() }), []) // calls when the app refreshes
   
+  const totalBucks = 150.00;
+  const totalChickfila = 2;
+  const totalLP = 5;
+  const totalMeals = 14;
+  const guestMeals= 5;
+  const [lionBucks, setBucks] = useState(100.00);
+  const [meals, setMeals] = useState(10);
+  const [lpMeals, setLPMeals] = useState(5);
+  const [chickMeals, setChickMeals] = useState(2);
+  const [guestMealsLeft, setGuestMeals] = useState(5);
+
 
   // if statements to change the mealplan numbers
   const [fontsLoaded] = useFonts({
@@ -26,38 +45,9 @@ export default function HomeScreen() {
   });
 
   const mealplan = "A";
-  let totalMeals;
-  let guestMeals;
 
-  if(mealplan == "A") {
-    totalMeals = 14;
-    guestMeals = 5;
-  }
-  else if (mealplan == "B") {
-    totalMeals = 10;
-    guestMeals = 5;
-  }
-  else if (mealplan == "U") {
-    totalMeals = 19;
-    guestMeals = 15;
-  }
-  else if (mealplan == "C") {
-    totalMeals = 80;
-    guestMeals = 5;
-  }
-  else {
-    totalMeals = NaN;
-    guestMeals = NaN;
-  }
 
-  const totalBucks = 150.00;
-  const totalChickfila = 2;
-  const totalLP = 5;
-  const [lionBucks, decreaseBucks] = useState(100.00);
-  const [meals, decreaseMeals] = useState(10);
-  const [lpMeals, decreaseLPMeals] = useState(5);
-  const [chickMeals, decreaseChickMeals] = useState(2);
-  const [guestMealsLeft, decreaseGuestMeals] = useState(5);
+  
 
       let theme;
         if (useColorScheme() == "dark") {
