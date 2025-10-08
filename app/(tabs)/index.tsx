@@ -1,6 +1,6 @@
 
 import { useFonts } from "expo-font";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { CircularProgressBase } from 'react-native-circular-progress-indicator';
 // components
@@ -11,31 +11,36 @@ import { Colors } from '@/constants/Colors';
 import Header from '../../components/Header';
 import Seperator from '../../components/Seperator';
 
+const API_URL = "https://raw.githubusercontent.com/FHU/fhu-meal-tracker/refs/heads/main/"
+
+
 export default function HomeScreen() {
+    const totalBucks = 150.00;
+    const totalChickfila = 2;
+    const totalLP = 5;
+    const totalMeals = 14;
+    const guestMeals= 5;
+    const [lionBucks, setBucks] = useState(100.00);
+    const [meals, setMeals] = useState(10);
+    const [lpMeals, setLPMeals] = useState(5);
+    const [chickMeals, setChickMeals] = useState(2);
+    const [guestMealsLeft, setGuestMeals] = useState(5);
 
-  // const getData = async () => { 
+
+  const getData = async () => { 
     // bring in our data
-    // const response = await fetch(hhtps://api.fhumealtracker.fhu.edu/data.json);
-    // const data = await response.json;
+    const response = await fetch(API_URL + "data.json");
+    const data = response.json;
     // setMeals(data.meals.remaining);
-    // setLPMeals(data.lpmeals.remaining);
-    // setChickMeals(data.chickmeals.remaining);
-    // setGuestMeals(data.guestmeals.remaining);
-    // setBucks(data.lionbucks.remaining);
-  // }
+    // setLPMeals(data.lionsPrideExpress.remaining);
+    // setChickMeals(data.chickFilA.remaining);
+    // setGuestMeals(data.guestMeals.remaining);
+    // setBucks(data.diningDollars.remaining);
+  }
 
-  // use Effect(() => { getData() }), []) // calls when the app refreshes
+  useEffect(() => { getData() }, []) // calls when the app refreshes
   
-  const totalBucks = 150.00;
-  const totalChickfila = 2;
-  const totalLP = 5;
-  const totalMeals = 14;
-  const guestMeals= 5;
-  const [lionBucks, setBucks] = useState(100.00);
-  const [meals, setMeals] = useState(10);
-  const [lpMeals, setLPMeals] = useState(5);
-  const [chickMeals, setChickMeals] = useState(2);
-  const [guestMealsLeft, setGuestMeals] = useState(5);
+
 
 
   // if statements to change the mealplan numbers

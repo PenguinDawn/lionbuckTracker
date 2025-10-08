@@ -28,6 +28,13 @@ export default function TabLayout() {
         tabBarActiveTintColor: theme.tint,  
         headerShown: false,
       }}>
+        <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+        }}
+      />
       <Tabs.Screen
         name="index"
         options={{
@@ -42,13 +49,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="history" color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-        }}
-      />
+      
     </Tabs>
   );
 }
