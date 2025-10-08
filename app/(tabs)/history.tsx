@@ -18,10 +18,10 @@ const sectionTotal = (section) => section.data.reduce((sum, t) => sum + (t.amoun
 
 // ---------- Styling ----------
 const TAG_STYLES = {
-  Starbucks: { bg: '#F3E8FF', text: '#6B21A8' },
+  Starbucks: { bg: '#0e572fff', text: '#dcf1e5ff' },
   LP:        { bg: '#E0F2FE', text: '#075985' },
-  CFA:       { bg: '#FEF3C7', text: '#92400E' },
-  Jones:     { bg: '#DCFCE7', text: '#166534' },
+  CFA:       { bg: '#871616ff', text: '#f7e8dfff' },
+  Jones:     { bg: '#e5e5a2ff', text: '#9f3729ff' },
 };
 
 const ALL_TAGS = ['All', 'Starbucks', 'LP', 'CFA', 'Jones'];
