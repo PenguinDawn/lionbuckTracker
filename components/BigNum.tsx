@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     textNums: {
       fontSize: 24,
       fontFamily: "sans-serif",
+      fontWeight: "bold",
     },
     textSlash: {
       marginTop: 5,

@@ -70,7 +70,9 @@ const styles = StyleSheet.create({
     whiteText: {
       color: "white",
       fontSize: 16,
-      fontFamily: "Archivo-Reg, sans-serif"
+      fontFamily: "Archivo-Reg, sans-serif",
+      fontWeight: "bold",
+      letterSpacing: 1/2,
     },
     smaller: {
       marginTop: 20,

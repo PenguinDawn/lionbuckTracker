@@ -33,7 +33,7 @@ export default function TabTwoScreen() {
     <ScrollView>
       <View style={styles.container}>
         <Header />
-        <Text style={[styles.lionTitle, {color: theme.color}]}>History</Text>
+        <Text style={[styles.lionTitle, {color: theme.color, fontWeight: "bold"}]}>History</Text>
         <Seperator />
         <Transaction headingTitle='hi' purchase='hi' price={10} newBalance={100} />
         

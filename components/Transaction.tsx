@@ -25,8 +25,9 @@ const Transaction = ({headingTitle, purchase, price, newBalance}: CardMealProps)
 
   return (
     <View style={[styles.carded]}>
-      <View style={[styles.maroon]}><Text style={styles.whiteText}>{headingTitle}</Text></View>
-      <View style={[styles.flexer, {backgroundColor: theme.background}]}></View>
+      <Text style={[{color: theme.color}]}>Date</Text>
+      <Text style={[{color: theme.color}]}>Description</Text>
+      <Text style={[{color: theme.color}]}>Amount</Text>
     </View>
   )
 };
@@ -34,19 +35,6 @@ const Transaction = ({headingTitle, purchase, price, newBalance}: CardMealProps)
 export default Transaction
 
 const styles = StyleSheet.create({
-    maroon: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundImage: "linear-gradient(to right bottom, #901431, #87112c, #7e0d28, #750923, #6c061f, #64051d, #5d051c, #55041a, #4b051a, #420719, #380818, #2f0816)",
-        color: 'white',
-        fontFamily: 'sans-serif',
-        fontWeight: 'semibold',
-        padding: 10,
-        flexDirection: 'row',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        width: "65%",
-    },
     flexer: {
       flexDirection: "row",
       justifyContent: 'center',
@@ -61,14 +49,12 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontFamily: "Archivo-Reg, sans-serif"
     },
-    smaller: {
-      marginTop: 20,
-    },
     carded: {
-    borderWidth: 2,
-    borderStyle: "solid",
-    borderColor: "gray",
-    borderRadius: 12,
+      borderWidth: 2,
+      borderStyle: "solid",
+      borderColor: "gray",
+      borderRadius: 12,
+      width: "75%",
     // border: "1px solid rgba(255, 255, 255, 0.125)",
     },
 })

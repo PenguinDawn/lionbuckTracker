@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import BigNumber from '@/components/BigNum';
 import CardMeal from '@/components/CardsMeals';
 import SmallNumber from '@/components/SmallNum';
-import ThemedSchedule from '@/components/ThemedSchedule';
 import Header from '../../components/Header';
 import Seperator from '../../components/Seperator';
 
@@ -74,7 +73,7 @@ export default function TabOneScreen() {
 
       {/* Progress circle bar */}
       <View style={styles.progressHolder}>
-        <Text style={[styles.lionTitle, {color: theme.color}]}>LionBucks</Text>
+        <Text style={[styles.lionTitle, {color: theme.color, fontWeight: "bold"}]}>LionBucks</Text>
         <View style={[styles.middle]}>
           <CircularProgressBase
             value={lionBucks}
@@ -95,25 +94,19 @@ export default function TabOneScreen() {
       <Seperator />
 
 
-      <CardMeal size="large" headingTitle="Total Mealswipes Left" num1={<BigNumber>{meals}</BigNumber>} num2={<SmallNumber>{totalMeals}</SmallNumber>}></CardMeal>
+      <CardMeal size="large" headingTitle="Total Mealswipes" num1={<BigNumber>{meals}</BigNumber>} num2={<SmallNumber>{totalMeals}</SmallNumber>}></CardMeal>
 
       <View style={styles.twoCards}>
-          <CardMeal size="small" headingTitle="LP Swipes" num1={<BigNumber>{lpMeals}</BigNumber>} num2={<SmallNumber>{totalLP}</SmallNumber>}></CardMeal>
-          <CardMeal size="small" headingTitle="Chickfila Swipes" num1={<BigNumber>{chickMeals}</BigNumber>} num2={<SmallNumber>{totalChickfila}</SmallNumber>}></CardMeal>
+          <CardMeal size="small" headingTitle="LP" num1={<BigNumber>{lpMeals}</BigNumber>} num2={<SmallNumber>{totalLP}</SmallNumber>}></CardMeal>
+          <CardMeal size="small" headingTitle="Chick-fil-a" num1={<BigNumber>{chickMeals}</BigNumber>} num2={<SmallNumber>{totalChickfila}</SmallNumber>}></CardMeal>
       </View>
 
-      <CardMeal size="large" headingTitle="Guest Meals*" num1={<BigNumber>{guestMealsLeft}</BigNumber>} num2={<SmallNumber>{guestMeals}</SmallNumber>}></CardMeal>
-
+      <Text style={{color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15}}>*Reset on Sunday (2 days)</Text>
       <Seperator />
 
-      {/* create reset function */}
-      <ThemedSchedule>Resets on Sunday (<Text style={styles.textUnderline}>2 days</Text>)</ThemedSchedule>
-      {/* create a "database" for mealplan names and totals*/}
-      <ThemedSchedule>Meal Plan {mealplan} (<Text style={styles.textUnderline}>{totalMeals} meals</Text>)</ThemedSchedule>
-
-      <Text style={{color: "#e3d073ff", fontFamily: "Archivo-Reg, sans-serif"}}>*resets every semester</Text>
+      <CardMeal size="large" headingTitle="Guest Meals" num1={<BigNumber>{guestMealsLeft}</BigNumber>} num2={<SmallNumber>{guestMeals}</SmallNumber>}></CardMeal>
+      <Text style={{color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15}}>*Resets every semester</Text>
       <Seperator />
-
       </View>
 
     </ScrollView>
