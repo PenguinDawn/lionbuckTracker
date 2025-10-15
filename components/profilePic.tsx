@@ -1,10 +1,9 @@
 import { Image, StyleSheet } from 'react-native';
 
-const ProfilePic = () => {
+const ProfilePic = (src: string) => {
 
   return (
-    <Image style={styles.imaging}></Image>
-
+    <Image style={styles.imaging} src={src}></Image>
 )
 }
 

@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 
 
@@ -29,6 +29,8 @@ export default function ProfileScreen() {
       const [reset, setReset] = useState("week");
       const [lionBucks, setBucks] = useState(175);
 
+      const [showing, setShowing] = useState(false);
+
       let theme;
         if (useColorScheme() == "dark") {
           theme = Colors.dark;
@@ -51,8 +53,13 @@ export default function ProfileScreen() {
         <Text style={[styles.listingStyle, {color: theme.color}]}>Username: {userName}</Text>
           {/* password */}
         <View style={styles.passwordContainer}>
-          <Text style={[styles.listingStyle, {color: theme.color}]}>Password: {password}</Text>
+          <Text style={[styles.listingStyle, {color: theme.color}]}>Password:</Text>
           {/* show password */}
+          {showing && (
+            <Text>{password}</Text>
+          )}
+          <View style={[styles.showButton]}>Show</View>
+    
           {/* make the conditional showing */}
         </View>
       </View>
@@ -67,7 +74,8 @@ export default function ProfileScreen() {
           <Text style={[styles.listingStyle, {color: theme.color}]}>${lionBucks} per semester</Text>
       </View>
       <Seperator />
-      <Button>Logout</Button>
+
+      <View style={styles.buttonHolder}>Logout</View>
       {/* logout */}
 
       {/* display */}
@@ -106,6 +114,25 @@ const styles = StyleSheet.create({
   },
   passwordContainer: {
     flexDirection: "row",
+    gap: 4,
+    
+  },
+  buttonHolder: {
+    backgroundImage: "linear-gradient(to right bottom, #901431, #87112c, #7e0d28, #750923, #6c061f, #64051d, #5d051c, #55041a, #4b051a, #420719, #380818, #2f0816)",
+    color: 'white',
+    fontFamily: 'sans-serif',
+    padding: 10,
+    borderRadius: 5,
+    cursor: "pointer",
+  },
+   showButton: {
+    backgroundImage: "linear-gradient(to right bottom, #901431, #87112c, #7e0d28, #750923, #6c061f, #64051d, #5d051c, #55041a, #4b051a, #420719, #380818, #2f0816)",
+    color: 'white',
+    fontFamily: 'sans-serif',
+    fontSize: 14,
+    padding: 5,
+    borderRadius: 5,
+    cursor: "pointer",
   },
   flexer: {
       flexDirection: "row",
