@@ -1,3 +1,4 @@
+import Header from '@/components/Header';
 import React, { memo, useCallback, useMemo, useState } from 'react';
 import { Pressable, RefreshControl, SafeAreaView, SectionList, StyleSheet, Text, View } from 'react-native';
 
@@ -299,6 +300,7 @@ export default function HistoryScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       {/* Header */}
+      <Header />
       <View style={styles.listHeader}>
         <Text style={styles.h1}>Transactions</Text>
         <Text style={styles.subtitle}>

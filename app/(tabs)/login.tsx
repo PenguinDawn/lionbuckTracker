@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 
 
@@ -7,11 +7,9 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from 'react-native';
 
 import Header from '@/components/Header';
-import ProfilePic from '@/components/profilePic';
-import Seperator from '@/components/Seperator';
 import { useFonts } from "expo-font";
 import { useState } from 'react';
-export default function ProfileScreen() {
+export default function LoginScreen() {
 
   
 
@@ -41,36 +39,17 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <Header />
-      <ProfilePic />
-      <Seperator />
-      <View style={styles.textHolder}>
-          {/* name */}
-        <Text style={[styles.listingStyle, {color: theme.color}]}>{name}</Text>
-          {/* username */}
-        <Text style={[styles.listingStyle, {color: theme.color}]}>Username: {userName}</Text>
-          {/* password */}
-        <View style={styles.passwordContainer}>
-          <Text style={[styles.listingStyle, {color: theme.color}]}>Password: {password}</Text>
-          {/* show password */}
-          {/* make the conditional showing */}
-        </View>
-      </View>
-
-      
-      <Seperator />
-
-      <View style={styles.textHolder}>
-          {/* meal plan */}
-          <Text style={[styles.listingStyle, {color: theme.color}]}>Meal Plan {mealplan} ({meals} meals a {reset})</Text>
-          {/* dining dollars given */}
-          <Text style={[styles.listingStyle, {color: theme.color}]}>${lionBucks} per semester</Text>
-      </View>
-      <Seperator />
-      <Button>Logout</Button>
-      {/* logout */}
-
-      {/* display */}
+    <Header />
+    <View>
+        {/* username */}
+        <Text style={[styles.label, {color: theme.color}]}>Username</Text>
+        <TextInput></TextInput>
+        {/* password */}
+        <Text>Password</Text>
+        <TextInput></TextInput>
+        {/* login */}
+        <Button>Login</Button>
+    </View>
 
     </View>
   );

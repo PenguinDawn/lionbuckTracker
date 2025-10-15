@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     textBaby: {
       paddingTop: 2,
       fontSize: 16,
-      marginTop: 14,
+      marginTop: 9,
+      paddingLeft: 2,
       fontFamily: "sans-serif",
     }
 
