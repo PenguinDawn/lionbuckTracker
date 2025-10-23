@@ -1,33 +1,11 @@
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-
-
-
-import { Colors } from '@/constants/Colors';
-
-import { useColorScheme } from 'react-native';
-
 import Header from '@/components/Header';
-import { useFonts } from "expo-font";
-import { useState } from 'react';
+import { Colors } from '@/constants/Colors';
+import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, useColorScheme, View } from 'react-native';
 export default function LoginScreen() {
-
-  
-
-  // if statements to change the mealplan numbers
-  const [fontsLoaded] = useFonts({
-    "Tangerine-Reg": require("../../assets/fonts/Tangerine-Regular.ttf"),
-    "Archivo-Reg": require("../../assets/fonts/Archivo-Regular.ttf"),
-  });
-
-      const [name, setName] = useState("Carl");
-      const [userName, setuserName] = useState("Carlos2004");
-      const [password, setPassword] = useState("password");
-      const [mealplan, setmealplan] = useState("A");
-      const [meals, setMeals] = useState(14);
-      const [reset, setReset] = useState("week");
-      const [lionBucks, setBucks] = useState(175);
-
-      let theme;
+  const router = useRouter();
+    let theme;
         if (useColorScheme() == "dark") {
           theme = Colors.dark;
         }
@@ -35,68 +13,79 @@ export default function LoginScreen() {
           theme = Colors.light;
         }
 
-  
+      const [user, setUser] = useState("");
+      const [password, setPassword] = useState("");
+      const [submitted, setSubmit] = useState(false);
+
+      useEffect(() => {router.navigate("/")} , [submitted])
 
   return (
-    <View style={styles.container}>
-    <Header />
-    <View>
-        {/* username */}
-        <Text style={[styles.label, {color: theme.color}]}>Username</Text>
-        <TextInput></TextInput>
-        {/* password */}
-        <Text>Password</Text>
-        <TextInput></TextInput>
-        {/* login */}
-        <Button>Login</Button>
-    </View>
+    <View style={[styles.container, {backgroundColor: theme.background }]}>
+      <Header />
 
+      <View style={[styles.container, {alignItems: "center", justifyContent: "center", gap: 15}]}>
+      <Text style={[styles.nameStyle, {color: theme.color} ]}>Login</Text>
+       <TextInput value={user} onChangeText={(text) => {setUser(text)}} style={styles.search} placeholder='Username'></TextInput>
+       <TextInput value={password} onChangeText={(text) => {setPassword(text)}} style={styles.search} placeholder='Password'></TextInput>
+        <Pressable style={styles.buttonHolder} onPress={() => {setSubmit(true)}}>
+          Submit
+        </Pressable>
+      </View>
     </View>
   );
 }
 
+
+ 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    gap: 10,
+    flex: 1,
+},
+  separator: {
+      height: 1,
+      width: '100%',
+      backgroundColor: "white",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    listed: {
+        flexDirection: 'column',
+        gap: 8,
+        fontSize: 18,
+        width: '50%',
+        marginInline: "auto",
+    },
+    textStyle: {
+        fontSize: 16,
+        color: "white",
+    },
+  buttonHolder: {
+    backgroundImage: "linear-gradient(to right bottom, #901431, #87112c, #7e0d28, #750923, #6c061f, #64051d, #5d051c, #55041a, #4b051a, #420719, #380818, #2f0816)",
+    fontFamily: 'sans-serif',
+    padding: 10,
+    borderRadius: 5,
+    cursor: "pointer",
+    color: "white",
   },
-  textHolder: {
-    width: "60%",
-    gap: 10,
-  },
-  progressHolder: {
-    flexDirection: "column",
-    width: "65%",
-    alignItems: "center",
-  },
-  middle: {
-    marginInline: "auto",
-  },
-  listingStyle: {
-    fontSize: 16,
-    fontFamily: "Tangerine",
-  },
-  textUnderline: {
-    textDecorationLine: "underline",
-  },
-  passwordContainer: {
+    pressText: {
+      color: "white",
+      fontSize: 16,
+    },
+    nameStyle: {
+        fontSize: 36,
+        fontWeight: "bold",
+        letterSpacing: 1,
+         marginBottom: 10,
+    },
+    search: {
+    backgroundColor: "#fff",
     flexDirection: "row",
+    borderRadius: 8,
+    borderColor: "maroon",
+    borderWidth: 4,
+    gap: 3,
+    padding: 3,
+    color: "black",
+    fontSize: 16,
+
   },
-  flexer: {
-      flexDirection: "row",
-      justifyContent: 'center',
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
-      padding: 5,
-      paddingTop: 10,
-      paddingBottom: 10,
-    },
-    label: {
 
-    },
-
-});
+})

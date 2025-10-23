@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 
 
@@ -10,6 +10,7 @@ import Header from '@/components/Header';
 import ProfilePic from '@/components/profilePic';
 import Seperator from '@/components/Seperator';
 import { useFonts } from "expo-font";
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 export default function ProfileScreen() {
 
@@ -20,6 +21,8 @@ export default function ProfileScreen() {
     "Tangerine-Reg": require("../../assets/fonts/Tangerine-Regular.ttf"),
     "Archivo-Reg": require("../../assets/fonts/Archivo-Regular.ttf"),
   });
+
+  const router = useRouter();
 
       const [name, setName] = useState("Carl");
       const [userName, setuserName] = useState("Carlos2004");
@@ -44,7 +47,7 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Header />
-      <ProfilePic />
+      <ProfilePic srced="null" />
       <Seperator />
       <View style={styles.textHolder}>
           {/* name */}
@@ -53,12 +56,15 @@ export default function ProfileScreen() {
         <Text style={[styles.listingStyle, {color: theme.color}]}>Username: {userName}</Text>
           {/* password */}
         <View style={styles.passwordContainer}>
-          <Text style={[styles.listingStyle, {color: theme.color}]}>Password:</Text>
-          {/* show password */}
-          {showing && (
-            <Text>{password}</Text>
+          <Text style={[styles.listingStyle, {color: theme.color}]}>Password: 
+
+             {showing && (
+            <Text style={{color: theme.color}}> {password}</Text>
           )}
-          <View style={[styles.showButton]}>Show</View>
+          </Text>
+          {/* show password */}
+         
+          <Pressable onPress={() => {setShowing(!showing)}} style={[styles.showButton]}>Show</Pressable>
     
           {/* make the conditional showing */}
         </View>
@@ -75,7 +81,7 @@ export default function ProfileScreen() {
       </View>
       <Seperator />
 
-      <View style={styles.buttonHolder}>Logout</View>
+      <Pressable style={styles.buttonHolder} onPress={() => {router.navigate("/login")}}>Logout</Pressable>
       {/* logout */}
 
       {/* display */}
@@ -115,6 +121,7 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: "row",
     gap: 4,
+    justifyContent: "space-between",
     
   },
   buttonHolder: {

@@ -1,9 +1,12 @@
 import { Image, StyleSheet } from 'react-native';
+type proped = {
+  srced: string,
+}
 
-const ProfilePic = (src: string) => {
+const ProfilePic = ({srced}: proped) => {
 
   return (
-    <Image style={styles.imaging} src={src}></Image>
+    <Image style={styles.imaging} src={srced}></Image>
 )
 }
 
