@@ -1,28 +1,38 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-
-
-
 import { Colors } from '@/constants/Colors';
-
-import { useColorScheme } from 'react-native';
+import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 import Header from '@/components/Header';
-import ProfilePic from '@/components/profilePic';
 import Seperator from '@/components/Seperator';
 import { useFonts } from "expo-font";
-import { useRouter } from 'expo-router';
 import { useState } from 'react';
+
 export default function ProfileScreen() {
-
-  
-
   // if statements to change the mealplan numbers
   const [fontsLoaded] = useFonts({
     "Tangerine-Reg": require("../../assets/fonts/Tangerine-Regular.ttf"),
     "Archivo-Reg": require("../../assets/fonts/Archivo-Regular.ttf"),
   });
 
-  const router = useRouter();
+    //   const {
+  //   diningDollars,
+  //   lionBucks,
+  //   mealSwipes,
+  //   guestSwipes,
+  //   isLoading,
+  //   error,
+  //   fetchMealData,
+  // } = useMealSwipeData();
+
+  
+  // const handleGetHtml = async () => {
+  //   try {
+  //     await fetchMealData(username, password);
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // };
+
 
       const [name, setName] = useState("Carl");
       const [userName, setuserName] = useState("Carlos2004");
@@ -47,11 +57,9 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Header />
-      <ProfilePic srced="null" />
-      <Seperator />
       <View style={styles.textHolder}>
           {/* name */}
-        <Text style={[styles.listingStyle, {color: theme.color}]}>{name}</Text>
+        <Text style={[styles.title, {color: theme.color}]}>Welcome {userName}</Text>
           {/* username */}
         <Text style={[styles.listingStyle, {color: theme.color}]}>Username: {userName}</Text>
           {/* password */}
@@ -81,7 +89,7 @@ export default function ProfileScreen() {
       </View>
       <Seperator />
 
-      <Pressable style={styles.buttonHolder} onPress={() => {router.navigate("/login")}}>Logout</Pressable>
+      <Pressable style={styles.buttonHolder} >Logout</Pressable> // do the thing
       {/* logout */}
 
       {/* display */}
@@ -122,6 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 4,
     justifyContent: "space-between",
+    alignItems: "center",
     
   },
   buttonHolder: {

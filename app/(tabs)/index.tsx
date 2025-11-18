@@ -1,6 +1,4 @@
-
 import { useFonts } from "expo-font";
-import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { CircularProgressBase } from 'react-native-circular-progress-indicator';
 // components
@@ -8,42 +6,63 @@ import BigNumber from '@/components/BigNum';
 import CardMeal from '@/components/CardsMeals';
 import SmallNumber from '@/components/SmallNum';
 import { Colors } from '@/constants/Colors';
+import { useState } from "react";
 import Header from '../../components/Header';
 import Seperator from '../../components/Seperator';
 
-const API_URL = "https://raw.githubusercontent.com/FHU/fhu-meal-tracker/refs/heads/main/"
-
 
 export default function HomeScreen() {
-    const totalBucks = 150.00;
-    const totalChickfila = 2;
-    const totalLP = 5;
-    const totalMeals = 14;
-    const guestMeals= 5;
-    const [lionBucks, setBucks] = useState(100.00);
-    const [meals, setMeals] = useState(10);
-    const [lpMeals, setLPMeals] = useState(5);
-    const [chickMeals, setChickMeals] = useState(2);
-    const [guestMealsLeft, setGuestMeals] = useState(5);
+  const totalChickfila = 2; // needs some logic to figure out the meal swipes
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+    const diningDollars = "10";
+    const lionBucks = 10;
+    const mealSwipes = 10;
+    const guestSwipes = 5;
+    const mealInfo = {
+      name: "Meal Plan A",
+      totalMeals: 10,
+      totalDiningDollars: 170,
+      totalGuestSwipes: 5}
 
 
-  const getData = async () => { 
-    // bring in our data
-    const response = await fetch(API_URL + "data.json");
-    const data = response.json;
-    // setMeals(data.meals.remaining);
-    // setLPMeals(data.lionsPrideExpress.remaining);
-    // setChickMeals(data.chickFilA.remaining);
-    // setGuestMeals(data.guestMeals.remaining);
-    // setBucks(data.diningDollars.remaining);
-  }
+  // const {
+  //   diningDollars,
+  //   lionBucks,
+  //   mealSwipes,
+  //   guestSwipes,
+  //   transactions,
+  //   isLoading,
+  //   error,
+  //   mealInfo,
+  //   fetchMealData,
+  // } = useMealSwipeData();
 
-  useEffect(() => { getData() }, []) // calls when the app refreshes
   
 
+  const [reset, setReset] = useState("");
+  const [daysTilReset, setDaysTilReset] = useState(5);
+  // if (mealInfo?.name == "Meal Plan C") {
+  //   setReset("end of semester")
+  // }
+  // else {
+  //   setReset("Sunday")
+  //   let date = new Date();
+  //   let day = date.getDay();
+  //   setDaysTilReset(7 - day)
+  // }
 
 
-  // if statements to change the mealplan numbers
+  // const handleGetHtml = async () => {
+  //   try {
+  //     await fetchMealData(username, password);
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // };
+
   const [fontsLoaded] = useFonts({
     "Tangerine-Reg": require("../../assets/fonts/Tangerine-Regular.ttf"),
     "Archivo-Reg": require("../../assets/fonts/Archivo-Regular.ttf"),
@@ -51,61 +70,63 @@ export default function HomeScreen() {
 
   const mealplan = "A";
 
+  let theme;
+  if (useColorScheme() == "dark") {
+    theme = Colors.dark;
+  }
+  else {
+    theme = Colors.light;
+  }
 
-  
 
-      let theme;
-        if (useColorScheme() == "dark") {
-          theme = Colors.dark;
-        }
-        else {
-          theme = Colors.light;
-        }
-
-  
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <Header />
-      
 
-      {/* Progress circle bar */}
-      <View style={styles.progressHolder}>
-        <Text style={[styles.lionTitle, {color: theme.color, fontWeight: "bold"}]}>LionBucks</Text>
-        <View style={[styles.middle]}>
-          <CircularProgressBase
-            value={lionBucks}
-            radius={75}
-            maxValue={totalBucks}
-            duration={800}
-            activeStrokeWidth={10}
-            activeStrokeColor='maroon'
+
+        {/* Progress circle bar */}
+        <View style={styles.progressHolder}>
+          <Text style={[styles.lionTitle, { color: theme.color, fontWeight: "bold" }]}>LionBucks</Text>
+          <View style={[styles.middle]}>
+            <CircularProgressBase
+              value={parseInt(diningDollars)}
+              radius={75}
+              maxValue={mealInfo?.totalDiningDollars}
+              duration={800}
+              activeStrokeWidth={10}
+              activeStrokeColor='maroon'
+              circleBackgroundColor="#363535ff"
             >
-              <View style={styles.flexer}><BigNumber>${lionBucks}</BigNumber><SmallNumber>${totalBucks}</SmallNumber></View>
-          </CircularProgressBase>
+              <View style={styles.flexer}><Text style={[styles.insideText, {color: theme.color}]}>${diningDollars}</Text></View>
+            </CircularProgressBase>
 
+          </View>
+
+          {/* insert bar here */}
         </View>
 
-        {/* insert bar here */}
-      </View>
-      
-      <Seperator />
+        <Seperator />
 
 
-      <CardMeal size="large" headingTitle="Total Mealswipes" num1={<BigNumber>{meals}</BigNumber>} num2={<SmallNumber>{totalMeals}</SmallNumber>}></CardMeal>
+        <CardMeal size="large" headingTitle="Total Mealswipes" num1={<BigNumber>{mealSwipes}</BigNumber>} num2={<SmallNumber>{mealInfo?.totalMeals}</SmallNumber>}></CardMeal>
 
-      <View style={styles.twoCards}>
-          <CardMeal size="small" headingTitle="LP" num1={<BigNumber>{lpMeals}</BigNumber>} num2={<SmallNumber>{totalLP}</SmallNumber>}></CardMeal>
-          <CardMeal size="small" headingTitle="Chick-fil-a" num1={<BigNumber>{chickMeals}</BigNumber>} num2={<SmallNumber>{totalChickfila}</SmallNumber>}></CardMeal>
-      </View>
+        <View style={styles.twoCards}>
+          <CardMeal size="small" headingTitle="LP" num1={<BigNumber>number here</BigNumber>} num2={<SmallNumber>{5}</SmallNumber>}></CardMeal>
+          <CardMeal size="small" headingTitle="Chick-fil-a" num1={<BigNumber>number here</BigNumber>} num2={<SmallNumber>2</SmallNumber>}></CardMeal>
+        </View>
 
-      <Text style={{color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15}}>*Reset on Sunday (2 days)</Text>
-      <Seperator />
+        <Text style={{ color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15 }}>*Reset is {reset} 
+          {reset !== "end of semester" &&
+          <Text style={{ color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15 }}>in {daysTilReset} days </Text>
+          }
+          </Text>
+        <Seperator />
 
-      <CardMeal size="large" headingTitle="Guest Meals" num1={<BigNumber>{guestMealsLeft}</BigNumber>} num2={<SmallNumber>{guestMeals}</SmallNumber>}></CardMeal>
-      <Text style={{color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15}}>*Resets every semester</Text>
-      <Seperator />
+        <CardMeal size="large" headingTitle="Guest Meals" num1={<BigNumber>{guestSwipes}</BigNumber>} num2={<SmallNumber>{mealInfo?.totalGuestSwipes}</SmallNumber>}></CardMeal>
+        <Text style={{ color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15 }}>*Resets every semester</Text>
+        <Seperator />
       </View>
 
     </ScrollView>
@@ -124,6 +145,9 @@ const styles = StyleSheet.create({
   lionTitle: {
     fontFamily: "Tangerine-Reg",
     fontSize: 36,
+  },
+    insideText: {
+    fontSize: 30,
   },
   progressHolder: {
     flexDirection: "column",
@@ -146,13 +170,13 @@ const styles = StyleSheet.create({
     marginInline: "auto",
   },
   flexer: {
-      flexDirection: "row",
-      justifyContent: 'center',
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
-      padding: 5,
-      paddingTop: 10,
-      paddingBottom: 10,
-    },
+    flexDirection: "row",
+    justifyContent: 'center',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    padding: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
 
 });
