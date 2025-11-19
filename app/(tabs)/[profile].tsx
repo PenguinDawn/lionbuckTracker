@@ -1,10 +1,13 @@
 import { Colors } from '@/constants/Colors';
-import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { Linking, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 import Header from '@/components/Header';
 import Seperator from '@/components/Seperator';
+import { clearLogin, loadLogin } from '@/hooks/use-auth';
+import { useMealSwipeData } from '@/hooks/use-meal-swipe-data';
 import { useFonts } from "expo-font";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 
 export default function ProfileScreen() {
   // if statements to change the mealplan numbers
@@ -13,36 +16,55 @@ export default function ProfileScreen() {
     "Archivo-Reg": require("../../assets/fonts/Archivo-Regular.ttf"),
   });
 
-    //   const {
-  //   diningDollars,
-  //   lionBucks,
-  //   mealSwipes,
-  //   guestSwipes,
-  //   isLoading,
-  //   error,
-  //   fetchMealData,
-  // } = useMealSwipeData();
+    const mailtoUrl = `mailto:ttenon@fhu.edu`;
+  
+    const openEmail = async () => {
+      try {
+        const supported = await Linking.canOpenURL(mailtoUrl);
+        if (supported) {
+          await Linking.openURL(mailtoUrl);
+        } else {
+          console.log("Can't handle mailto URL on this device.");
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+    };
+
+
+    const {
+    lionBucks,
+    mealInfo,
+    fetchMealData,
+  } = useMealSwipeData();
 
   
-  // const handleGetHtml = async () => {
-  //   try {
-  //     await fetchMealData(username, password);
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // };
+  const handleGetHtml = async () => {
+    try {
+      await fetchMealData(username, password);
+    }
+    catch (err) {
+      console.log(err)
+    }
+  };
 
-
-      const [name, setName] = useState("Carl");
-      const [userName, setuserName] = useState("Carlos2004");
+      const [username, setUsername] = useState("Carlos2004");
       const [password, setPassword] = useState("password");
-      const [mealplan, setmealplan] = useState("A");
-      const [meals, setMeals] = useState(14);
+      const [mealplan, setMealplan] = useState<string | undefined>();
+      const [meals, setMeals] = useState<number | undefined>(14);
       const [reset, setReset] = useState("week");
-      const [lionBucks, setBucks] = useState(175);
+     
+      setMeals(mealInfo?.totalMeals);
+      setMealplan(mealInfo?.name);
 
       const [showing, setShowing] = useState(false);
+
+        if (mealInfo?.name == "Meal Plan C") {
+        setReset("at end of semester")
+        }
+        else {
+          setReset("on Sunday")
+        }
 
       let theme;
         if (useColorScheme() == "dark") {
@@ -52,6 +74,16 @@ export default function ProfileScreen() {
           theme = Colors.light;
         }
 
+          useEffect(() => {
+              (async () => {
+                const saved = await loadLogin();
+                if (saved.username) setUsername(saved.username);
+                if (saved.password) setPassword(saved.password);
+              })();
+            }, []);
+
+
+
   
 
   return (
@@ -59,9 +91,9 @@ export default function ProfileScreen() {
       <Header />
       <View style={styles.textHolder}>
           {/* name */}
-        <Text style={[styles.title, {color: theme.color}]}>Welcome {userName}</Text>
+        <Text style={[styles.title, {color: theme.color}]}>Welcome {username}</Text>
           {/* username */}
-        <Text style={[styles.listingStyle, {color: theme.color}]}>Username: {userName}</Text>
+        <Text style={[styles.listingStyle, {color: theme.color}]}>Username: {username}</Text>
           {/* password */}
         <View style={styles.passwordContainer}>
           <Text style={[styles.listingStyle, {color: theme.color}]}>Password: 
@@ -83,16 +115,14 @@ export default function ProfileScreen() {
 
       <View style={styles.textHolder}>
           {/* meal plan */}
-          <Text style={[styles.listingStyle, {color: theme.color}]}>Meal Plan {mealplan} ({meals} meals a {reset})</Text>
+          <Text style={[styles.listingStyle, {color: theme.color}]}>{mealplan} ({meals} meals, resets {reset})</Text>
           {/* dining dollars given */}
           <Text style={[styles.listingStyle, {color: theme.color}]}>${lionBucks} per semester</Text>
+          <Pressable onPress={openEmail}><Text style={[styles.listingStyle, {color: theme.color, textDecorationLine: "underline"}]}>Email Us</Text></Pressable>
       </View>
       <Seperator />
 
-      <Pressable style={styles.buttonHolder} >Logout</Pressable> // do the thing
-      {/* logout */}
-
-      {/* display */}
+      <Pressable style={styles.buttonHolder} onPress={clearLogin} >Logout</Pressable> // do the thing
 
     </View>
   );

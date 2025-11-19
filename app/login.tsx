@@ -3,6 +3,7 @@ import { Colors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, useColorScheme, View } from 'react-native';
+
 export default function LoginScreen() {
   const router = useRouter();
     let theme;

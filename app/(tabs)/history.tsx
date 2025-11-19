@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
+import { useMealSwipeData } from '@/hooks/use-meal-swipe-data';
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
@@ -18,33 +19,14 @@ const ALL_TAGS = ['All', 'Starbucks', 'LP', 'CFA', 'Jones'];
 
 
 
-function changeValue (value) {
-        let val = "";
-        if(value.includes("Chick")) {
-          val = "CFA" 
-        }
-        else if(value.includes("Jones")) {
-          val = "Jones" 
-        }
-        else if(value.includes("KC's Coffee")) {
-          val = "Starbucks" 
-        }
-        else if(value.includes("Lions Pride Express")) {
-          val = "LP" 
-        }
-
-        return val;
-}
-
-
 // ---------- UI Bits ----------
-const TagChip = ({label, active, onPress}) => {
-  return (
-    <Pressable onPress={onPress} style={[styles.chip, active && styles.chipActive]}>
-      <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
-    </Pressable>
-  );
-};
+// const TagChip = ({label, active, onPress}) => {
+//   return (
+//     <Pressable onPress={onPress} style={[styles.chip, active && styles.chipActive]}>
+//       <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+//     </Pressable>
+//   );
+// };
 
 const Tag = memo(function Tag( {value} ) {
   let val = "";
@@ -91,36 +73,25 @@ const TransactionRow = ({item}) => {
 }
 
 
-
-// const SectionHeader = memo(function SectionHeader({ title, total }) {
-//   return (
-//     <View style={styles.sectionHeader}>
-//       <Text style={styles.sectionTitle}>{title}</Text>
-//       <Text style={styles.sectionTotal}>{total}</Text>
-//     </View>
-//   );
-// });
-
-
 // ---------- Main Component ----------
 export default function HistoryScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const {
-  //   transactions,
-  //   error,
-  //   mealInfo,
-  //   fetchMealData,
-  // } = useMealSwipeData();
+  const {
+    transactions,
+    error,
+    mealInfo,
+    fetchMealData,
+  } = useMealSwipeData();
 
-  //   const handleGetHtml = async () => {
-  //   try {
-  //     await fetchMealData(username, password);
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // };
+    const handleGetHtml = async () => {
+    try {
+      await fetchMealData(username, password);
+    }
+    catch (err) {
+      console.log(err)
+    }
+  };
 
   interface MealTransaction {
   date: string;
@@ -129,64 +100,10 @@ export default function HistoryScreen() {
   account: string;
   amount: string;
 } 
-const data1 = [
-{
-  date: "Nov 17, 2025",
-  time: "weird time",
-  description: "Lions Pride Express",
-  account: "something",
-  amount: "$5.70",
-},
-{
-  date: "Nov 17, 2025",
-  time: "weird time",
-  description: "Jones",
-  account: "unit",
-  amount: "$5.70",
-},
-{
-  date: "Nov 17, 2025",
-  time: "weird time",
-  description: "Chick Fil A",
-  account: "something",
-  amount: "$5.70",
-}
-]
 
-  const [filteredData, setFilteredData] = useState(data1);
+  const [filteredData, setFilteredData] = useState<MealTransaction[]>();
+  useEffect(() => {setFilteredData(transactions)} , [])
 
-  const [sections, setSections] = useState(data1);
-  const [activeTag, setActiveTag] = useState('All');
-  useEffect(() => {setFilteredData(sections)} , [])
-
-
-  // Filter sections by tag (and drop empty sections)
-  useEffect(() => {
-    const tag = activeTag === 'All' ? null : activeTag;
-    const mapped = tag ? sections.filter((part) => {
-        let value = part.description
-        let val = "";
-        if(value.includes("Chick")) {
-          val = "CFA" 
-        }
-        else if(value.includes("Jones")) {
-          val = "Jones" 
-        }
-        else if(value.includes("KC's Coffee")) {
-          val = "Starbucks" 
-        }
-        else if(value.includes("Lions")) {
-          val = "LP" 
-        }
-        val === tag;
-    }) : data1;
-    setFilteredData(mapped) 
-  }, [activeTag]);
-
-  // const grandTotal = useMemo(
-  //   () => filtered.reduce((sum, s) => sum + s._total, 0),
-  //   [filtered]
-  // );
 
 
   // Memoized renderers to reduce re-renders
@@ -199,21 +116,6 @@ const data1 = [
       <Header />
       <View style={styles.listHeader}>
         <Text style={styles.h1}>Transactions</Text>
-        <Text style={styles.subtitle}>
-          {activeTag === 'All' ? 'Last 10 days' : `${activeTag} • Last 10 days`}
-        </Text>
-
-        {/* Tag filter row */}
-        <View style={styles.chipsRow}>
-          {ALL_TAGS.map((label) => (
-            <TagChip
-              key={label}
-              label={label}
-              active={activeTag === label}
-              onPress={() => setActiveTag(label)}
-            />
-          ))}
-        </View>
       </View>
       <FlatList
       renderItem={renderItem}
