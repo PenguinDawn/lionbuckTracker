@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import { loadLogin } from '@/hooks/use-auth';
 import { useMealSwipeData } from '@/hooks/use-meal-swipe-data';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
@@ -10,9 +11,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 // ---------- Styling ----------
 const TAG_STYLES = {
   Starbucks: { bg: '#0e572fff', text: '#dcf1e5ff' },
-  LP:        { bg: '#E0F2FE', text: '#075985' },
-  CFA:       { bg: '#871616ff', text: '#f7e8dfff' },
-  Jones:     { bg: '#e5e5a2ff', text: '#9f3729ff' },
+  LP: { bg: '#E0F2FE', text: '#075985' },
+  CFA: { bg: '#871616ff', text: '#f7e8dfff' },
+  Jones: { bg: '#e5e5a2ff', text: '#9f3729ff' },
 };
 
 const ALL_TAGS = ['All', 'Starbucks', 'LP', 'CFA', 'Jones'];
@@ -28,19 +29,19 @@ const ALL_TAGS = ['All', 'Starbucks', 'LP', 'CFA', 'Jones'];
 //   );
 // };
 
-const Tag = memo(function Tag( {value} ) {
+const Tag = memo(function Tag({ value }) {
   let val = "";
-  if(value.includes("Chick")) {
-    val = "CFA" 
+  if (value.includes("Chick")) {
+    val = "CFA"
   }
-  else if(value.includes("Jones")) {
-    val = "Jones" 
+  else if (value.includes("Jones")) {
+    val = "Jones"
   }
-  else if(value.includes("KC's Coffee")) {
-    val = "Starbucks" 
+  else if (value.includes("KC's Coffee")) {
+    val = "Starbucks"
   }
-   else if(value.includes("Lions Pride Express")) {
-    val = "LP" 
+  else if (value.includes("Lions Pride Express")) {
+    val = "LP"
   }
   const style = TAG_STYLES[val] || { bg: '#E5E7EB', text: '#111827' };
   return (
@@ -51,10 +52,10 @@ const Tag = memo(function Tag( {value} ) {
 });
 
 
-const TransactionRow = ({item}) => {
+const TransactionRow = ({ item }) => {
   let unit = "";
-  
-  if(item.type == "UNIT") {
+
+  if (item.type == "UNIT") {
     unit = "Meal Swipe"
   }
   else {
@@ -84,7 +85,15 @@ export default function HistoryScreen() {
     fetchMealData,
   } = useMealSwipeData();
 
-    const handleGetHtml = async () => {
+  useEffect(() => {
+    (async () => {
+      const saved = await loadLogin();
+      if (saved.username) setUsername(saved.username);
+      if (saved.password) setPassword(saved.password);
+    })();
+  }, []);
+
+  const handleGetHtml = async () => {
     try {
       await fetchMealData(username, password);
     }
@@ -94,21 +103,21 @@ export default function HistoryScreen() {
   };
 
   interface MealTransaction {
-  date: string;
-  time: string;
-  description: string;
-  account: string;
-  amount: string;
-} 
+    date: string;
+    time: string;
+    description: string;
+    account: string;
+    amount: string;
+  }
 
   const [filteredData, setFilteredData] = useState<MealTransaction[]>();
-  useEffect(() => {setFilteredData(transactions)} , [])
+  useEffect(() => { setFilteredData(transactions) }, [])
 
 
 
   // Memoized renderers to reduce re-renders
   const renderItem = useCallback(({ item }) => <TransactionRow item={item} />, []);
- 
+
   // returning the app
   return (
     <SafeAreaView style={styles.safe}>
@@ -118,8 +127,8 @@ export default function HistoryScreen() {
         <Text style={styles.h1}>Transactions</Text>
       </View>
       <FlatList
-      renderItem={renderItem}
-      data={filteredData}
+        renderItem={renderItem}
+        data={filteredData}
       />
     </SafeAreaView>
   );

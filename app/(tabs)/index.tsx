@@ -6,8 +6,9 @@ import BigNumber from '@/components/BigNum';
 import CardMeal from '@/components/CardsMeals';
 import SmallNumber from '@/components/SmallNum';
 import { Colors } from '@/constants/Colors';
+import { loadLogin } from "@/hooks/use-auth";
 import { useMealSwipeData } from "@/hooks/use-meal-swipe-data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from '../../components/Header';
 import Seperator from '../../components/Seperator';
 
@@ -15,6 +16,7 @@ import Seperator from '../../components/Seperator';
 export default function HomeScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
 
   const {
     diningDollars,
@@ -24,7 +26,15 @@ export default function HomeScreen() {
     fetchMealData,
   } = useMealSwipeData();
 
-  
+  useEffect(() => {
+    (async () => {
+      const saved = await loadLogin();
+      if (saved.username) setUsername(saved.username);
+      if (saved.password) setPassword(saved.password);
+    })();
+  }, []);
+
+
 
   const [reset, setReset] = useState("");
   const [daysTilReset, setDaysTilReset] = useState(5);
@@ -83,7 +93,7 @@ export default function HomeScreen() {
               activeStrokeColor='maroon'
               circleBackgroundColor="#363535ff"
             >
-              <View style={styles.flexer}><Text style={[styles.insideText, {color: theme.color}]}>${diningDollars}</Text></View>
+              <View style={styles.flexer}><Text style={[styles.insideText, { color: theme.color }]}>${diningDollars}</Text></View>
             </CircularProgressBase>
 
           </View>
@@ -101,11 +111,11 @@ export default function HomeScreen() {
           <CardMeal size="small" headingTitle="Chick-fil-a" num1={<BigNumber>number here</BigNumber>} num2={<SmallNumber>2</SmallNumber>}></CardMeal>
         </View> */}
 
-        <Text style={{ color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15 }}>*Reset is {reset} 
+        <Text style={{ color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15 }}>*Reset is {reset}
           {reset !== "end of semester" &&
-          <Text style={{ color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15 }}>in {daysTilReset} days </Text>
+            <Text style={{ color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15 }}>in {daysTilReset} days </Text>
           }
-          </Text>
+        </Text>
 
         <CardMeal size="large" headingTitle="Guest Meals" num1={<BigNumber>{guestSwipes}</BigNumber>} num2={<SmallNumber>{mealInfo?.totalGuestSwipes}</SmallNumber>}></CardMeal>
         <Text style={{ color: theme.color, fontFamily: "Archivo-Reg, sans-serif", fontSize: 15 }}>*Resets every semester</Text>
@@ -129,7 +139,7 @@ const styles = StyleSheet.create({
     fontFamily: "Tangerine-Reg",
     fontSize: 36,
   },
-    insideText: {
+  insideText: {
     fontSize: 30,
   },
   progressHolder: {

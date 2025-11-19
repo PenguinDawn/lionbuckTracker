@@ -16,29 +16,29 @@ export default function ProfileScreen() {
     "Archivo-Reg": require("../../assets/fonts/Archivo-Regular.ttf"),
   });
 
-    const mailtoUrl = `mailto:ttenon@fhu.edu`;
-  
-    const openEmail = async () => {
-      try {
-        const supported = await Linking.canOpenURL(mailtoUrl);
-        if (supported) {
-          await Linking.openURL(mailtoUrl);
-        } else {
-          console.log("Can't handle mailto URL on this device.");
-        }
-      } catch (error) {
-        console.error('An error occurred:', error);
+  const mailtoUrl = `mailto:ttenon@fhu.edu`;
+
+  const openEmail = async () => {
+    try {
+      const supported = await Linking.canOpenURL(mailtoUrl);
+      if (supported) {
+        await Linking.openURL(mailtoUrl);
+      } else {
+        console.log("Can't handle mailto URL on this device.");
       }
-    };
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
 
 
-    const {
+  const {
     lionBucks,
     mealInfo,
     fetchMealData,
   } = useMealSwipeData();
 
-  
+
   const handleGetHtml = async () => {
     try {
       await fetchMealData(username, password);
@@ -48,77 +48,77 @@ export default function ProfileScreen() {
     }
   };
 
-      const [username, setUsername] = useState("Carlos2004");
-      const [password, setPassword] = useState("password");
-      const [mealplan, setMealplan] = useState<string | undefined>();
-      const [meals, setMeals] = useState<number | undefined>(14);
-      const [reset, setReset] = useState("week");
-     
-      setMeals(mealInfo?.totalMeals);
-      setMealplan(mealInfo?.name);
+  const [username, setUsername] = useState("Carlos2004");
+  const [password, setPassword] = useState("password");
+  const [mealplan, setMealplan] = useState<string | undefined>();
+  const [meals, setMeals] = useState<number | undefined>(14);
+  const [reset, setReset] = useState("week");
 
-      const [showing, setShowing] = useState(false);
+  setMeals(mealInfo?.totalMeals);
+  setMealplan(mealInfo?.name);
 
-        if (mealInfo?.name == "Meal Plan C") {
-        setReset("at end of semester")
-        }
-        else {
-          setReset("on Sunday")
-        }
+  const [showing, setShowing] = useState(false);
 
-      let theme;
-        if (useColorScheme() == "dark") {
-          theme = Colors.dark;
-        }
-        else {
-          theme = Colors.light;
-        }
+  if (mealInfo?.name == "Meal Plan C") {
+    setReset("at end of semester")
+  }
+  else {
+    setReset("on Sunday")
+  }
 
-          useEffect(() => {
-              (async () => {
-                const saved = await loadLogin();
-                if (saved.username) setUsername(saved.username);
-                if (saved.password) setPassword(saved.password);
-              })();
-            }, []);
+  let theme;
+  if (useColorScheme() == "dark") {
+    theme = Colors.dark;
+  }
+  else {
+    theme = Colors.light;
+  }
+
+  useEffect(() => {
+    (async () => {
+      const saved = await loadLogin();
+      if (saved.username) setUsername(saved.username);
+      if (saved.password) setPassword(saved.password);
+    })();
+  }, []);
 
 
 
-  
+
 
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.textHolder}>
-          {/* name */}
-        <Text style={[styles.title, {color: theme.color}]}>Welcome {username}</Text>
-          {/* username */}
-        <Text style={[styles.listingStyle, {color: theme.color}]}>Username: {username}</Text>
-          {/* password */}
+        {/* name */}
+        <Text style={[styles.title, { color: theme.color }]}>Welcome {username}</Text>
+        {/* username */}
+        <Text style={[styles.listingStyle, { color: theme.color }]}>Username: {username}</Text>
+        {/* password */}
         <View style={styles.passwordContainer}>
-          <Text style={[styles.listingStyle, {color: theme.color}]}>Password: 
+          <Text style={[styles.listingStyle, { color: theme.color }]}>Password:
 
-             {showing && (
-            <Text style={{color: theme.color}}> {password}</Text>
-          )}
+            {showing && (
+              <Text style={{ color: theme.color }}> {password}</Text>
+            )}
           </Text>
           {/* show password */}
-         
-          <Pressable onPress={() => {setShowing(!showing)}} style={[styles.showButton]}>Show</Pressable>
-    
+
+          <Pressable onPress={() => { setShowing(!showing) }} style={[styles.showButton]}>Show</Pressable>
+
           {/* make the conditional showing */}
         </View>
       </View>
 
-      
+
       <Seperator />
 
       <View style={styles.textHolder}>
-          {/* meal plan */}
-          <Text style={[styles.listingStyle, {color: theme.color}]}>{mealplan} ({meals} meals, resets {reset})</Text>
-          {/* dining dollars given */}
-          <Text style={[styles.listingStyle, {color: theme.color}]}>${lionBucks} per semester</Text>
-          <Pressable onPress={openEmail}><Text style={[styles.listingStyle, {color: theme.color, textDecorationLine: "underline"}]}>Email Us</Text></Pressable>
+        {/* meal plan */}
+        <Text style={[styles.listingStyle, { color: theme.color }]}>{mealplan} ({meals} meals, resets {reset})</Text>
+        {/* dining dollars given */}
+        <Text style={[styles.listingStyle, { color: theme.color }]}>${lionBucks} per semester</Text>
+        <Pressable onPress={openEmail}><Text style={[styles.listingStyle, { color: theme.color, textDecorationLine: "underline" }]}>Email Us</Text></Pressable>
       </View>
       <Seperator />
 
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     gap: 4,
     justifyContent: "space-between",
     alignItems: "center",
-    
+
   },
   buttonHolder: {
     backgroundImage: "linear-gradient(to right bottom, #901431, #87112c, #7e0d28, #750923, #6c061f, #64051d, #5d051c, #55041a, #4b051a, #420719, #380818, #2f0816)",
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     cursor: "pointer",
   },
-   showButton: {
+  showButton: {
     backgroundImage: "linear-gradient(to right bottom, #901431, #87112c, #7e0d28, #750923, #6c061f, #64051d, #5d051c, #55041a, #4b051a, #420719, #380818, #2f0816)",
     color: 'white',
     fontFamily: 'sans-serif',
@@ -181,13 +181,13 @@ const styles = StyleSheet.create({
     cursor: "pointer",
   },
   flexer: {
-      flexDirection: "row",
-      justifyContent: 'center',
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
-      padding: 5,
-      paddingTop: 10,
-      paddingBottom: 10,
-    },
+    flexDirection: "row",
+    justifyContent: 'center',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    padding: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
 
 });
