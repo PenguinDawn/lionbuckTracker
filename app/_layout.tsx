@@ -3,6 +3,8 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 
+import { loadLogin } from '@/hooks/use-auth';
+import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 
 export {
@@ -25,11 +27,24 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+    const [isLogged, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+      (async () => {
+        const saved = await loadLogin();
+        if (saved.username) {
+          setIsLoggedIn(true);
+        }
+        else {
+          setIsLoggedIn(false)
+        };
+      })();
+    }, []);
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
+
       </Stack>
     </ThemeProvider>
   );
