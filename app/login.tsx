@@ -1,11 +1,12 @@
 import Header from '@/components/Header';
 import { Colors } from '@/constants/Colors';
-import { useRouter } from 'expo-router';
+import { saveLogin } from '@/hooks/use-auth';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, useColorScheme, View } from 'react-native';
 
+
+
 export default function LoginScreen() {
-  const router = useRouter();
     let theme;
         if (useColorScheme() == "dark") {
           theme = Colors.dark;
@@ -18,7 +19,9 @@ export default function LoginScreen() {
       const [password, setPassword] = useState("");
       const [submitted, setSubmit] = useState(false);
 
-      useEffect(() => {router.navigate("/")} , [submitted])
+      useEffect(() => {
+        saveLogin(user, password);
+      }, [submitted])
 
   return (
     <View style={[styles.container, {backgroundColor: theme.background }]}>
