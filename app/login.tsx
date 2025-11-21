@@ -17,7 +17,6 @@ export default function LoginScreen() {
 
       const [user, setUser] = useState("");
       const [password, setPassword] = useState("");
-      const [submitted, setSubmit] = useState(false);
 
 
   return (

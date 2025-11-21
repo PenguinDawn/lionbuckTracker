@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import { loadLogin } from '@/hooks/use-auth';
+import { useMealSwipeData } from '@/hooks/use-meal-swipe-data';
 import { Redirect } from 'expo-router';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
@@ -78,39 +79,39 @@ const TransactionRow = ({ item }) => {
 export default function HistoryScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const {
-  //   transactions,
-  //   error,
-  //   mealInfo,
-  //   fetchMealData,
-  // } = useMealSwipeData();
+  const {
+    transactions,
+    error,
+    mealInfo,
+    fetchMealData,
+  } = useMealSwipeData();
 
 
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const saved = await loadLogin();
-  //     if (saved.username) setUsername(saved.username);
-  //     if (saved.password) setPassword(saved.password);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const saved = await loadLogin();
+      if (saved.username) setUsername(saved.username);
+      if (saved.password) setPassword(saved.password);
+    })();
+  }, []);
 
-  // const handleGetHtml = async () => {
-  //   try {
-  //     await fetchMealData(username, password);
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // };
+  const handleGetHtml = async () => {
+    try {
+      await fetchMealData(username, password);
+    }
+    catch (err) {
+      console.log(err)
+    }
+  };
 
-  const transactions = [{
-    date: "Nov 28",
-    time: "12:00",
-    description: "Jones",
-    amount: "122",
-    type: "UNIT"
-  }]
+  // const transactions = [{
+  //   date: "Nov 28",
+  //   time: "12:00",
+  //   description: "Jones",
+  //   amount: "122",
+  //   type: "UNIT"
+  // }]
 
   interface MealTransaction {
     date: string;

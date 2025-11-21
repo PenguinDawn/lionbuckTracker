@@ -7,6 +7,7 @@ import CardMeal from '@/components/CardsMeals';
 import SmallNumber from '@/components/SmallNum';
 import { Colors } from '@/constants/Colors';
 import { loadLogin } from "@/hooks/use-auth";
+import { useMealSwipeData } from "@/hooks/use-meal-swipe-data";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 import Header from '../../components/Header';
@@ -18,24 +19,24 @@ export default function HomeScreen() {
   const [password, setPassword] = useState("");
 
 
-  // const {
-  //   diningDollars,
-  //   mealSwipes,
-  //   guestSwipes,
-  //   mealInfo,
-  //   fetchMealData,
-  // } = useMealSwipeData();
+  const {
+    diningDollars,
+    mealSwipes,
+    guestSwipes,
+    mealInfo,
+    fetchMealData,
+  } = useMealSwipeData();
 
-  const diningDollars = "10";
-  const mealSwipes = "10";
-  const guestSwipes = "5";
-  const mealInfo = {
-    name: "14 Meal",
-    totalMeals: 14,
-    totalGuestSwipes: 5,
-    totalDiningDollars: 10,
+  // const diningDollars = "10";
+  // const mealSwipes = "10";
+  // const guestSwipes = "5";
+  // const mealInfo = {
+  //   name: "14 Meal",
+  //   totalMeals: 14,
+  //   totalGuestSwipes: 5,
+  //   totalDiningDollars: 10,
 
-  }
+  // }
 
   const [Logged, setLogged] = useState(false);
 
@@ -76,14 +77,14 @@ export default function HomeScreen() {
 
 
 
-  // const handleGetHtml = async () => {
-  //   try {
-  //     await fetchMealData(username, password);
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // };
+  const handleGetHtml = async () => {
+    try {
+      await fetchMealData(username, password);
+    }
+    catch (err) {
+      console.log(err)
+    }
+  };
 
   const [fontsLoaded] = useFonts({
     "Tangerine-Reg": require("../../assets/fonts/Tangerine-Regular.ttf"),

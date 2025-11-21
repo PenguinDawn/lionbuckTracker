@@ -4,6 +4,7 @@ import { Linking, Pressable, StyleSheet, Text, useColorScheme, View } from 'reac
 import Header from '@/components/Header';
 import Seperator from '@/components/Seperator';
 import { clearLogin, loadLogin } from '@/hooks/use-auth';
+import { useMealSwipeData } from '@/hooks/use-meal-swipe-data';
 import { useFonts } from 'expo-font';
 import { Redirect } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -31,27 +32,27 @@ export default function ProfileScreen() {
   };
 
 
-  // const {
-  //   lionBucks,
-  //   mealInfo,
-  //   fetchMealData,
-  // } = useMealSwipeData();
+  const {
+    lionBucks,
+    mealInfo,
+    fetchMealData,
+  } = useMealSwipeData();
 
 
-  // const handleGetHtml = async () => {
-  //   try {
-  //     await fetchMealData(username, password);
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // };
+  const handleGetHtml = async () => {
+    try {
+      await fetchMealData(username, password);
+    }
+    catch (err) {
+      console.log(err)
+    }
+  };
 
-  const mealInfo = {
-    name: "14 Meal Plan",
-    totalMeals: 14,
-  }
-  const lionBucks = 30;
+  // const mealInfo = {
+  //   name: "14 Meal Plan",
+  //   totalMeals: 14,
+  // }
+  // const lionBucks = 30;
 
   const [username, setUsername] = useState("Carlos2004");
   const [password, setPassword] = useState("password");
@@ -64,15 +65,15 @@ export default function ProfileScreen() {
   const [showing, setShowing] = useState(false);
 
   useEffect(() => {
-    if (mealInfo.name == "Meal Plan C") {
+    if (mealInfo?.name == "Meal Plan C") {
       setReset("at end of semester")
     }
     else {
       setReset("on Sunday")
     }
 
-    setMeals(mealInfo.totalMeals);
-    setMealplan(mealInfo.name);
+    setMeals(mealInfo?.totalMeals);
+    setMealplan(mealInfo?.name);
 
   }, [])
 
