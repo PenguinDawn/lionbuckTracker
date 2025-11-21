@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import { Colors } from '@/constants/Colors';
 import { saveLogin } from '@/hooks/use-auth';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, useColorScheme, View } from 'react-native';
 
 
@@ -19,9 +19,6 @@ export default function LoginScreen() {
       const [password, setPassword] = useState("");
       const [submitted, setSubmit] = useState(false);
 
-      useEffect(() => {
-        saveLogin(user, password);
-      }, [submitted])
 
   return (
     <View style={[styles.container, {backgroundColor: theme.background }]}>
@@ -31,7 +28,7 @@ export default function LoginScreen() {
       <Text style={[styles.nameStyle, {color: theme.color} ]}>Login</Text>
        <TextInput value={user} onChangeText={(text) => {setUser(text)}} style={styles.search} placeholder='Username'></TextInput>
        <TextInput value={password} onChangeText={(text) => {setPassword(text)}} style={styles.search} placeholder='Password'></TextInput>
-        <Pressable style={styles.buttonHolder} onPress={() => {setSubmit(true)}}>
+        <Pressable style={styles.buttonHolder} onPress={() => {saveLogin(user, password)}}>
           Submit
         </Pressable>
       </View>

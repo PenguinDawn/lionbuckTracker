@@ -4,25 +4,24 @@ import { Linking, Pressable, StyleSheet, Text, useColorScheme, View } from 'reac
 import Header from '@/components/Header';
 import Seperator from '@/components/Seperator';
 import { clearLogin, loadLogin } from '@/hooks/use-auth';
-import { useMealSwipeData } from '@/hooks/use-meal-swipe-data';
-import { useFonts } from "expo-font";
+import { useFonts } from 'expo-font';
+import { Redirect } from 'expo-router';
 import { useEffect, useState } from 'react';
 
 
 export default function ProfileScreen() {
-  // if statements to change the mealplan numbers
+
   const [fontsLoaded] = useFonts({
     "Tangerine-Reg": require("../../assets/fonts/Tangerine-Regular.ttf"),
     "Archivo-Reg": require("../../assets/fonts/Archivo-Regular.ttf"),
   });
 
-  const mailtoUrl = `mailto:ttenon@fhu.edu`;
 
   const openEmail = async () => {
     try {
-      const supported = await Linking.canOpenURL(mailtoUrl);
+      const supported = await Linking.canOpenURL("mailto:ttenon@fhu.edu");
       if (supported) {
-        await Linking.openURL(mailtoUrl);
+        await Linking.openURL("mailto:ttenon@fhu.edu");
       } else {
         console.log("Can't handle mailto URL on this device.");
       }
@@ -32,21 +31,27 @@ export default function ProfileScreen() {
   };
 
 
-  const {
-    lionBucks,
-    mealInfo,
-    fetchMealData,
-  } = useMealSwipeData();
+  // const {
+  //   lionBucks,
+  //   mealInfo,
+  //   fetchMealData,
+  // } = useMealSwipeData();
 
 
-  const handleGetHtml = async () => {
-    try {
-      await fetchMealData(username, password);
-    }
-    catch (err) {
-      console.log(err)
-    }
-  };
+  // const handleGetHtml = async () => {
+  //   try {
+  //     await fetchMealData(username, password);
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // };
+
+  const mealInfo = {
+    name: "14 Meal Plan",
+    totalMeals: 14,
+  }
+  const lionBucks = 30;
 
   const [username, setUsername] = useState("Carlos2004");
   const [password, setPassword] = useState("password");
@@ -54,17 +59,24 @@ export default function ProfileScreen() {
   const [meals, setMeals] = useState<number | undefined>(14);
   const [reset, setReset] = useState("week");
 
-  setMeals(mealInfo?.totalMeals);
-  setMealplan(mealInfo?.name);
+
 
   const [showing, setShowing] = useState(false);
 
-  if (mealInfo?.name == "Meal Plan C") {
-    setReset("at end of semester")
-  }
-  else {
-    setReset("on Sunday")
-  }
+  useEffect(() => {
+    if (mealInfo.name == "Meal Plan C") {
+      setReset("at end of semester")
+    }
+    else {
+      setReset("on Sunday")
+    }
+
+    setMeals(mealInfo.totalMeals);
+    setMealplan(mealInfo.name);
+
+  }, [])
+
+
 
   let theme;
   if (useColorScheme() == "dark") {
@@ -74,19 +86,28 @@ export default function ProfileScreen() {
     theme = Colors.light;
   }
 
+  const [Logged, setLogged] = useState(false);
+
   useEffect(() => {
     (async () => {
       const saved = await loadLogin();
-      if (saved.username) setUsername(saved.username);
-      if (saved.password) setPassword(saved.password);
-    })();
+      if (saved.username) {
+        setUsername(saved.username);
+        setLogged(true)
+      }
+      else { setLogged(false) }
+      if (saved.password) {
+        setPassword(saved.password)
+        setLogged(true)
+      }
+      else { setLogged(false) };
+    })
   }, []);
 
 
 
 
-
-  return (
+  if (Logged) return (
     <View style={styles.container}>
       <Header />
       <View style={styles.textHolder}>
@@ -118,13 +139,18 @@ export default function ProfileScreen() {
         <Text style={[styles.listingStyle, { color: theme.color }]}>{mealplan} ({meals} meals, resets {reset})</Text>
         {/* dining dollars given */}
         <Text style={[styles.listingStyle, { color: theme.color }]}>${lionBucks} per semester</Text>
+
         <Pressable onPress={openEmail}><Text style={[styles.listingStyle, { color: theme.color, textDecorationLine: "underline" }]}>Email Us</Text></Pressable>
+      
       </View>
       <Seperator />
 
       <Pressable style={styles.buttonHolder} onPress={clearLogin} >Logout</Pressable> // do the thing
 
     </View>
+  );
+  return (
+    <Redirect href="/login" />
   );
 }
 
